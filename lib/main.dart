@@ -7,10 +7,12 @@ import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:loggy/loggy.dart';
 import 'package:universal_io/io.dart';
 
-import 'api/StaticDatabase.dart';
+import 'api/Get.dart';
 
 main() async {
-  globals.StaticDatabase = await StaticDatabase();
+  globals.StaticDatabase = await Get(
+          "https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/StaticDatabase/Index.json")
+      as Map<String, dynamic>;
   WidgetsFlutterBinding.ensureInitialized();
   Loggy.initLoggy(
     logPrinter: StreamPrinter(
@@ -35,8 +37,8 @@ main() async {
     );
     globals.FirebaseToken = await FirebaseMessaging.instance.getToken();
     logInfo('FirebaseToken: ' + globals.FirebaseToken.toString());
-  }else{
-    globals.web=true;
+  } else {
+    globals.web = true;
   }
   logInfo('Starting App');
   runApp(const ExpTechHome());

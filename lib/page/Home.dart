@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'UI/DynamicPage.dart';
+import 'UI/DevicePage.dart';
 import 'UI/HomePage.dart';
 
 class Home extends StatefulWidget {
@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   int _currentIndex = 0;
-  final pages = [const HomePage(), const DynamicPage()];
+  final pages = [const HomePage(), const DevicePage()];
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class _Home extends State<Home> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '首頁'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: '動態'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: '發佈'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: '設備'),
+          //BottomNavigationBarItem(icon: Icon(Icons.chat), label: '發佈'),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle), label: '我的'),
         ],

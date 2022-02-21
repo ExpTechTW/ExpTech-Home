@@ -1,28 +1,27 @@
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:loggy/loggy.dart';
 
-Future<Map<String, dynamic>> StaticDatabase() async {
+Future Get(url) async {
   try {
-    var response = await http.get(Uri.parse(
-        "https://raw.githubusercontent.com/ExpTechTW/RecordTree/%E7%A9%A9%E5%AE%9A%E7%89%88-(Release)/StaticDatabase/Index.json"));
+    var response =
+        await http.get(Uri.parse(url)).timeout(const Duration(seconds: 1));
+    ;
     var jsonResponse;
     if (response.statusCode == 200) {
-      jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
+      jsonResponse = convert.jsonDecode(response.body);
       Log(LogLevel.debug, jsonResponse);
       return jsonResponse;
     } else {
       Log(LogLevel.error, "StaticDatabase Not Found");
       return jsonDecode('{"state":"Error","response":"404"}');
     }
-  } on SocketException catch (e) {
-    String msg = e.message;
-    Log(LogLevel.error, msg);
-    return jsonDecode('{"state":"Error","response":"$msg"}');
+  } catch (e) {
+    print("err");
+    return jsonDecode('{"state":"Error"}');
   }
 }
 

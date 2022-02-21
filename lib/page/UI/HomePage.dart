@@ -1,6 +1,10 @@
 import 'package:exptech_home/api/Data.dart' as globals;
-import 'package:exptech_home/page/function/ArticlePage.dart';
+import 'package:exptech_home/api/NetWork.dart';
+import 'package:exptech_home/page/UI/ControlPage.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+
+import '../../api/Get.dart';
 
 int start = 0;
 
@@ -27,88 +31,82 @@ class _HomePage extends State<HomePage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       if (start == 0) {
         start = 1;
-        _children.add(
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ArticlePage(),
-                    maintainState: false,
-                    settings: const RouteSettings(
-                      arguments: {"type": "無法連線至 API 服務器"},
-                    ),
-                  ));
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: Image.network(globals.NotFoundImage),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "whes1015",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+        var State = await Get(
+            "https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/Json/device/state.json");
+        var LocalData = Hive.box('LocalData');
+        var data = await NetWork(
+            '{"Function":"home","Type":"home","UID":"${LocalData.get("UID")}","Token":"${globals.Token}"}');
+        for (var i = 0; i < data["response"].length; i++) {
+          String state;
+          if(State[data["response"][i]["model"]]==null){
+            if(data["response"][i]["state"]==1){
+              state="🟢 開啟";
+            }else{
+              state="🔴 關閉";
+            }
+          }else{
+            state=State[data["response"][i]["model"]][data["response"][i]["state"].toString()];
+          }
+          _children.add(
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ControlPage(),
+                      maintainState: false,
+                      settings: RouteSettings(
+                        arguments: {
+                          "EID": "${data["response"][i]["EID"]}",
+                          "Token": globals.Token
+                        },
+                      ),
+                    ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child:  Column(
+                    children: [
+                      SizedBox(
+                        height: 250,
+                        width: 250,
+                        child: Image.network(globals.NotFoundImage),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            data["response"][i]["model"],
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              state,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 20,
                               ),
                               textAlign: TextAlign.left,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            Text("2022/02/05 22:56"),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 250,
-                    width: 250,
-                    child: Image.network(globals.NotFoundImage),
-                  ),
-                  Row(
-                    children: const [
-                      Text(
-                        "10 👀 | 26 ❤ | 1 💬 | 300 🔥",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: const [
-                      Expanded(
-                        child: Text(
-                          "1234567890",
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16,
                           ),
-                          textAlign: TextAlign.left,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        );
-        setState(() {});
+          );
+          setState(() {});
+        }
       }
     });
 

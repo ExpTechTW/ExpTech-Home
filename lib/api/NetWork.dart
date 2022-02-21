@@ -16,7 +16,7 @@ Future<Map<String, dynamic>> NetWork(String json) async {
         .post(Uri.parse("http://150.117.110.118:10150/"),
             headers: {"content-type": "application/json"},
             body: utf8.encode(jsonEncode(Json)))
-        .timeout(Duration(seconds: 5));
+        .timeout(const Duration(seconds: 5));
     String reply = response.body;
     var Data = jsonDecode(reply);
     if (Data["state"] == "Success") {

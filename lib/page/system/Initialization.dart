@@ -1,5 +1,3 @@
-import 'package:universal_io/io.dart';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:exptech_home/api/NetWork.dart';
@@ -11,6 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loggy/loggy.dart';
 import 'package:lottie/lottie.dart';
 import 'package:platform_device_id/platform_device_id.dart';
+import 'package:universal_io/io.dart';
 
 int start = 0;
 int click = 0;
@@ -54,7 +53,6 @@ class _InitializationPage extends State<InitializationPage> {
           DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
           AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
           globals.DeviceINFO = androidInfo.model!;
-          print(globals.DeviceINFO);
         } else if (Platform.isIOS) {
           globals.Platform = "iOS";
           DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -124,7 +122,7 @@ class _InitializationPage extends State<InitializationPage> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LoginPage(),
+                  builder: (context) => const LoginPage(),
                   maintainState: false,
                 ));
           }

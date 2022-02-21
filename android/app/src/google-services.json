@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "119573701177",
+    "project_id": "exptech-home",
+    "storage_bucket": "exptech-home.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119573701177:android:cba3770835429ee1b163e8",
+        "android_client_info": {
+          "package_name": "com.exptech.exptech_home"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119573701177-dqrab10ij9796aop5ilubcu8fikqr0ad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD62kh3GRUMfLrn-VNWI8_pAwv0hSSG0Qg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119573701177-dqrab10ij9796aop5ilubcu8fikqr0ad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

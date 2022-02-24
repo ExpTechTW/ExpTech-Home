@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:loggy/loggy.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:universal_io/io.dart';
 
 import 'api/Get.dart';
@@ -14,6 +15,8 @@ main() async {
           "https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/StaticDatabase/Index.json")
       as Map<String, dynamic>;
   WidgetsFlutterBinding.ensureInitialized();
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  globals.ver=packageInfo.version;
   Loggy.initLoggy(
     logPrinter: StreamPrinter(
       const PrettyDeveloperPrinter(),

@@ -17,12 +17,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  final scrollController = ScrollController();
   final List<Widget> _children = <Widget>[];
 
   @override
   void dispose() {
-    scrollController.dispose();
     start = 0;
     super.dispose();
   }
@@ -70,10 +68,7 @@ class _HomePage extends State<HomePage> {
                         builder: (context) => const ControlPage(),
                         maintainState: false,
                         settings: RouteSettings(
-                          arguments: {
-                            "EID": "${data["response"][i]["EID"]}",
-                            "Token": globals.Token
-                          },
+                          arguments: {"EID": "${data["response"][i]["EID"]}"},
                         ),
                       ));
                 }
@@ -125,9 +120,11 @@ class _HomePage extends State<HomePage> {
       }
     });
 
-    return SingleChildScrollView(
-      child: Column(
-        children: _children,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: _children,
+        ),
       ),
     );
   }

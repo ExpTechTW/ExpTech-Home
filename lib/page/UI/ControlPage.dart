@@ -2,17 +2,16 @@ import 'dart:convert';
 
 import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:exptech_home/api/NetWork.dart';
+import 'package:exptech_home/page/UI/HomePage.dart';
+import 'package:exptech_home/page/UI/SettingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../api/Get.dart';
 
 String alert = "";
 int start = 0;
-IOWebSocketChannel channel = IOWebSocketChannel.connect(
-  'ws://150.117.110.118:910',
-);
 
 class ControlPage extends StatefulWidget {
   const ControlPage({Key? key}) : super(key: key);
@@ -22,8 +21,13 @@ class ControlPage extends StatefulWidget {
 }
 
 class _ControlPage extends State<ControlPage> {
+  WebSocketChannel channel =
+  WebSocketChannel.connect(Uri.parse('ws://150.117.110.118:910'));
   late String state = "加載中...";
   var State = {};
+  var data;
+  bool check = true;
+  late int time = 0;
 
   @override
   void dispose() {
@@ -39,13 +43,9 @@ class _ControlPage extends State<ControlPage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       if (start == 0) {
         start = 1;
-        channel = IOWebSocketChannel.connect(
-          'ws://150.117.110.118:910',
-        );
-        channel.sink.add('{"test":"1","EID":"${LocalData.get("token")}"}');
         State = await Get(
             "https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/Json/device/state.json");
-        var data = await NetWork(
+        data = await NetWork(
             '{"Function":"home","Type":"device","UID":"${LocalData.get("UID")}","Token":"${globals.Token}","EID":"${arg["EID"]}"}');
         if (State[data["response"]["model"]] == null) {
           if (data["response"]["state"] == 1) {
@@ -58,18 +58,26 @@ class _ControlPage extends State<ControlPage> {
               [data["response"]["state"].toString()];
         }
         setState(() {});
+        channel =
+            WebSocketChannel.connect(Uri.parse('ws://150.117.110.118:910'));
+        channel.sink.add('{"EID":"${LocalData.get("token")}"}');
         channel.stream.listen((message) {
-          var data = jsonDecode(message);
-          if (State[data["model"]] == null) {
-            if (data["state"] == 1) {
-              state = "🟢 開啟";
+          data["response"] = jsonDecode(message);
+          if (data["response"]["EID"] == arg["EID"]) {
+            if (State[data["response"]["model"]] == null) {
+              if (data["response"]["state"] == 1) {
+                state = "🟢 開啟";
+              } else {
+                state = "🔴 關閉";
+              }
             } else {
-              state = "🔴 關閉";
+              state = State[data["response"]["model"]]
+                  [data["response"]["state"].toString()];
             }
-          } else {
-            state = State[data["model"]][data["state"].toString()];
+            check = true;
+            time++;
+            setState(() {});
           }
-          setState(() {});
         });
       }
     });
@@ -121,8 +129,23 @@ class _ControlPage extends State<ControlPage> {
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () async {
-                      await NetWork(
-                          '{"Function":"home","Type":"switch","UID":"${LocalData.get("UID")}","Token":"${globals.Token}","EID":"${arg["EID"]}"}');
+                      if (check) {
+                        int STATE = time;
+                        state = "執行中...";
+                        setState(() {});
+                        check = false;
+                        await NetWork(
+                            '{"Function":"home","Type":"switch","UID":"${LocalData.get("UID")}","Token":"${globals.Token}","EID":"${arg["EID"]}"}');
+                        await Future.delayed(
+                            const Duration(milliseconds: 2000));
+                        if (STATE == time) {
+                          alert = "未預期的錯誤";
+                          showAlert(context);
+                        }
+                      } else {
+                        alert = "正在傳遞指令";
+                        showAlert(context);
+                      }
                     },
                     child: const Text("切換"),
                   ),
@@ -140,7 +163,17 @@ class _ControlPage extends State<ControlPage> {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.grey),
                     ),
-                    onPressed: () async {},
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingPage(),
+                            maintainState: false,
+                            settings: RouteSettings(
+                              arguments: {"arg": arg, "data": data},
+                            ),
+                          ));
+                    },
                     child: const Text("設置"),
                   ),
                 ),
@@ -163,7 +196,18 @@ Future<bool?> showAlert(BuildContext context) {
         actions: <Widget>[
           TextButton(
             child: const Text('知道了'),
-            onPressed: () {},
+            onPressed: () {
+              if (alert == "未預期的錯誤") {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                      maintainState: false,
+                    ));
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
           ),
         ],
       );

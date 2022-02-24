@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import '../../api/Get.dart';
 
 int start = 0;
+String alert = "";
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,72 +39,86 @@ class _HomePage extends State<HomePage> {
             '{"Function":"home","Type":"home","UID":"${LocalData.get("UID")}","Token":"${globals.Token}"}');
         for (var i = 0; i < data["response"].length; i++) {
           String state;
-          if(State[data["response"][i]["model"]]==null){
-            if(data["response"][i]["state"]==1){
-              state="🟢 開啟";
-            }else{
-              state="🔴 關閉";
+          if (State[data["response"][i]["model"]] == null) {
+            if (data["response"][i]["online"] == false) {
+              state = "📶 設備離線";
+            } else {
+              if (data["response"][i]["state"] == 1) {
+                state = "🟢 開啟";
+              } else {
+                state = "🔴 關閉";
+              }
             }
-          }else{
-            state=State[data["response"][i]["model"]][data["response"][i]["state"].toString()];
+          } else {
+            if (data["response"][i]["online"] == false) {
+              state = "📶 設備離線";
+            } else {
+              state = State[data["response"][i]["model"]]
+                  [data["response"][i]["state"].toString()];
+            }
           }
           _children.add(
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ControlPage(),
-                      maintainState: false,
-                      settings: RouteSettings(
-                        arguments: {
-                          "EID": "${data["response"][i]["EID"]}",
-                          "Token": globals.Token
-                        },
-                      ),
-                    ));
+                if (data["response"][i]["online"] == false) {
+                  alert = "無法控制離線設備";
+                  showAlert(context);
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ControlPage(),
+                        maintainState: false,
+                        settings: RouteSettings(
+                          arguments: {
+                            "EID": "${data["response"][i]["EID"]}",
+                            "Token": globals.Token
+                          },
+                        ),
+                      ));
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child:  Column(
-                    children: [
-                      SizedBox(
-                        height: 250,
-                        width: 250,
-                        child: Image.network(globals.NotFoundImage),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            data["response"][i]["model"],
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 250,
+                      width: 250,
+                      child: Image.network(globals.NotFoundImage),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          data["response"][i]["model"],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 30,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            state,
                             style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 30,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20,
                             ),
                             textAlign: TextAlign.left,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              state,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 20,
-                              ),
-                              textAlign: TextAlign.left,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
+            ),
           );
           setState(() {});
         }
@@ -116,4 +131,24 @@ class _HomePage extends State<HomePage> {
       ),
     );
   }
+}
+
+Future<bool?> showAlert(BuildContext context) {
+  return showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('警告!'),
+        content: Text(alert),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('知道了'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

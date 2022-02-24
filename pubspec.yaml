@@ -22,6 +22,7 @@ dependencies:
   hive: ^2.0.5
   hive_flutter: ^1.1.0
   universal_io: ^2.0.4
+  web_socket_channel: ^2.1.0
 
   overlay_support: ^1.2.1
   cupertino_icons: ^1.0.4

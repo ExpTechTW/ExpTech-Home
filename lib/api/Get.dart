@@ -9,7 +9,6 @@ Future Get(url) async {
   try {
     var response =
         await http.get(Uri.parse(url)).timeout(const Duration(seconds: 1));
-    ;
     var jsonResponse;
     if (response.statusCode == 200) {
       jsonResponse = convert.jsonDecode(response.body);
@@ -20,7 +19,7 @@ Future Get(url) async {
       return jsonDecode('{"state":"Error","response":"404"}');
     }
   } catch (e) {
-    print("err");
+    print("err" + url);
     return jsonDecode('{"state":"Error"}');
   }
 }

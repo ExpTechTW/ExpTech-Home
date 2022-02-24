@@ -146,7 +146,7 @@ Future<bool?> showAlert(BuildContext context) {
           TextButton(
             child: const Text('知道了'),
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const DeviceInfoPage(),

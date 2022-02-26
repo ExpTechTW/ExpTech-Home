@@ -5,6 +5,7 @@ import 'package:exptech_home/api/NetWork.dart';
 import 'package:exptech_home/page/UI/HomePage.dart';
 import 'package:exptech_home/page/UI/SettingPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -22,7 +23,7 @@ class ControlPage extends StatefulWidget {
 
 class _ControlPage extends State<ControlPage> {
   WebSocketChannel channel =
-  WebSocketChannel.connect(Uri.parse('ws://150.117.110.118:910'));
+      WebSocketChannel.connect(Uri.parse('ws://150.117.110.118:910'));
   late String state = "加載中...";
   var State = {};
   var data;
@@ -62,21 +63,23 @@ class _ControlPage extends State<ControlPage> {
             WebSocketChannel.connect(Uri.parse('ws://150.117.110.118:910'));
         channel.sink.add('{"EID":"${LocalData.get("token")}"}');
         channel.stream.listen((message) {
-          data["response"] = jsonDecode(message);
-          if (data["response"]["EID"] == arg["EID"]) {
-            if (State[data["response"]["model"]] == null) {
-              if (data["response"]["state"] == 1) {
-                state = "🟢 開啟";
+          if (data["response"]["state"] != jsonDecode(message)["state"]) {
+            data["response"] = jsonDecode(message);
+            if (data["response"]["EID"].toString() == arg["EID"].toString()) {
+              if (State[data["response"]["model"]] == null) {
+                if (data["response"]["state"] == 1) {
+                  state = "🟢 開啟";
+                } else {
+                  state = "🔴 關閉";
+                }
               } else {
-                state = "🔴 關閉";
+                state = State[data["response"]["model"]]
+                    [data["response"]["state"].toString()];
               }
-            } else {
-              state = State[data["response"]["model"]]
-                  [data["response"]["state"].toString()];
+              check = true;
+              time++;
+              setState(() {});
             }
-            check = true;
-            time++;
-            setState(() {});
           }
         });
       }

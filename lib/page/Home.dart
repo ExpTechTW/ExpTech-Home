@@ -13,7 +13,7 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   int _currentIndex = 0;
-  final pages = [const HomePage(), const DevicePage(),const MinePage()];
+  final pages = [const HomePage(), const DevicePage(), const MinePage()];
 
   @override
   Widget build(BuildContext context) {

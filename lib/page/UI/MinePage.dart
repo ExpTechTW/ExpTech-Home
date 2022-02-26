@@ -1,6 +1,6 @@
+import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:exptech_home/api/Data.dart' as globals;
 
 class MinePage extends StatefulWidget {
   const MinePage({Key? key}) : super(key: key);

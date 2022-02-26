@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hive/hive.dart';
-import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../api/NetWork.dart';
@@ -87,8 +87,9 @@ class _OTAUpdatePage extends State<OTAUpdatePage> {
                                 .add('{"EID":"${LocalData.get("token")}"}');
                             channel.stream.listen((message) {
                               var data = jsonDecode(message);
-                              print(message);
-                              if (data["EID"].toString() == arg["EID"]) {
+                              if (data["EID"].toString() == arg["EID"] &&
+                                  data["Time"].toString() != arg["Time"] &&
+                                  data["Time"] != 0) {
                                 _button = "升級完成";
                                 buttonColor = Colors.green;
                                 setState(() {});

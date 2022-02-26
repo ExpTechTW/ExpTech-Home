@@ -19,7 +19,6 @@ Future Get(url) async {
       return jsonDecode('{"state":"Error","response":"404"}');
     }
   } catch (e) {
-    print("err" + url);
     return jsonDecode('{"state":"Error"}');
   }
 }

@@ -19,6 +19,7 @@ class _SettingPage extends State<SettingPage> {
     dynamic Data = ModalRoute.of(context)?.settings.arguments;
     var arg = Data["arg"];
     arg["model"] = Data["data"]["response"]["model"];
+    arg["ver"] = Data["data"]["response"]["ver"];
     data = Data["data"]["response"];
     return Scaffold(
       body: Padding(

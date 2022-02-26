@@ -16,7 +16,7 @@ main() async {
       as Map<String, dynamic>;
   WidgetsFlutterBinding.ensureInitialized();
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  globals.ver=packageInfo.version;
+  globals.ver = packageInfo.version;
   Loggy.initLoggy(
     logPrinter: StreamPrinter(
       const PrettyDeveloperPrinter(),

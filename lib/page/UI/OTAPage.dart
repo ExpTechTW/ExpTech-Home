@@ -29,6 +29,7 @@ class _OTAPage extends State<OTAPage> {
       if (start == 0) {
         start = 1;
         var Data = await Get("http://220.134.162.44/firmware/version.json");
+        print(Data);
         String device = Data[arg["model"]];
         var data = await Get(
             "http://220.134.162.44/firmware/" + device + "/version.json");

@@ -62,9 +62,10 @@ class _ControlPage extends State<ControlPage> {
             WebSocketChannel.connect(Uri.parse('ws://150.117.110.118:910'));
         channel.sink.add('{"EID":"${LocalData.get("token")}"}');
         channel.stream.listen((message) {
-          if (data["response"]["state"] != jsonDecode(message)["state"]) {
-            data["response"] = jsonDecode(message);
-            if (data["response"]["EID"].toString() == arg["EID"].toString()) {
+          var Data = jsonDecode(message);
+          if (Data["EID"].toString() == arg["EID"].toString()) {
+            if (data["response"]["state"] != Data["state"]) {
+              data["response"] = Data;
               if (State[data["response"]["model"]] == null) {
                 if (data["response"]["state"] == 1) {
                   state = "🟢 開啟";

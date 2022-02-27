@@ -74,9 +74,12 @@ class _OTAPage extends State<OTAPage> {
                     alert = "此版本已回收";
                     await showAlert(context);
                     return;
-                  }
-                  if (verCode > data[device].length - i) {
+                  } else if (verCode > data[device].length - i) {
                     alert = "不要輕易降低設備版本\n可能會導致設備異常";
+                    await showAlert(context);
+                  } else if (data[device][i]["ver"].indexOf("pre") != -1 ||
+                      data[device][i]["ver"].indexOf("rc") != -1) {
+                    alert = "開發版 可能導致設備不穩定\n請自行評估是否升級";
                     await showAlert(context);
                   }
                   arg["ver"] = data[device][i]["ver"];

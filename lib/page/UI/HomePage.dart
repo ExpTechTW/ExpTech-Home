@@ -119,12 +119,24 @@ class _HomePage extends State<HomePage> {
         }
       }
     });
-
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: _children,
+      body: RefreshIndicator(
+        child: ListView(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          children: _children.toList(),
         ),
+        onRefresh: () async {
+          start = 0;
+          while (true) {
+            setState(() {});
+            if (start == 1) {
+              break;
+            }
+            await Future.delayed(const Duration(milliseconds: 100));
+          }
+          return;
+        },
       ),
     );
   }

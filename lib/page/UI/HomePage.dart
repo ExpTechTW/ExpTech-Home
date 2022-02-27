@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  final List<Widget> _children = <Widget>[];
+  late List<Widget> _children = <Widget>[];
 
   @override
   void dispose() {
@@ -129,6 +129,7 @@ class _HomePage extends State<HomePage> {
         onRefresh: () async {
           start = 0;
           while (true) {
+            _children = <Widget>[];
             setState(() {});
             if (start == 1) {
               break;

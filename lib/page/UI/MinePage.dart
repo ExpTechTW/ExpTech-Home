@@ -2,6 +2,7 @@ import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:exptech_home/page/system/LogPage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MinePage extends StatefulWidget {
   const MinePage({Key? key}) : super(key: key);
@@ -80,7 +81,27 @@ class _MinePage extends State<MinePage> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(5),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                      ),
+                      onPressed: () async {
+                        await launch(
+                            'https://github.com/ExpTechTW/ExpTech-Home');
+                      },
+                      child: const Text("GitHub"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:

@@ -27,6 +27,7 @@ dependencies:
   package_info_plus: ^1.4.0
   flutter_launcher_icons: ^0.9.2
   pull_to_refresh: ^2.0.0
+  url_launcher: ^6.0.20
 
   overlay_support: ^1.2.1
   cupertino_icons: ^1.0.4

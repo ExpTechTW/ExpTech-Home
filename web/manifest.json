@@ -1,11 +1,11 @@
 {
-    "name": "exptech_home",
-    "short_name": "exptech_home",
+    "name": "ExpTech Home",
+    "short_name": "ExpTech Home",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Designed by ExpTech",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

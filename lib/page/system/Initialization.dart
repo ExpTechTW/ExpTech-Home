@@ -4,6 +4,7 @@ import 'package:exptech_home/api/NetWork.dart';
 import 'package:exptech_home/page/Home.dart';
 import 'package:exptech_home/page/system/ErrorPage.dart';
 import 'package:exptech_home/page/user/LoginPage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loggy/loggy.dart';
@@ -48,16 +49,20 @@ class _InitializationPage extends State<InitializationPage> {
         _load = "獲取平台訊息...";
         setState(() {});
         globals.DeviceID = await PlatformDeviceId.getDeviceId;
-        if (Platform.isAndroid) {
-          globals.Platform = "Android";
-          DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-          AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-          globals.DeviceINFO = androidInfo.model!;
-        } else if (Platform.isIOS) {
-          globals.Platform = "iOS";
-          DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-          IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-          globals.DeviceINFO = iosInfo.utsname.machine!;
+        if (!kIsWeb) {
+          if (Platform.isAndroid) {
+            globals.Platform = "Android";
+            DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+            AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+            globals.DeviceINFO = androidInfo.model!;
+          } else if (Platform.isIOS) {
+            globals.Platform = "iOS";
+            DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+            IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+            globals.DeviceINFO = iosInfo.utsname.machine!;
+          } else {
+            globals.Platform = "UnKnow";
+          }
         } else {
           globals.Platform = "Web";
         }

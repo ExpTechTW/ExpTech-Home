@@ -9,6 +9,5 @@ String DeviceINFO = "";
 String? FirebaseToken = "";
 String ver = "";
 Map<String, dynamic> StaticDatabase = {};
-bool web = false;
 String SSID = "";
 String PASS = "";

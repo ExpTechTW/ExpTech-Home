@@ -1,7 +1,9 @@
 import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:exptech_home/page/system/Initialization.dart';
+import 'package:exptech_home/page/user/NotSupportPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:loggy/loggy.dart';
@@ -26,7 +28,7 @@ main() async {
       stackTraceLevel: LogLevel.error,
     ),
   );
-  if (Platform.isIOS || Platform.isAndroid) {
+  if (!kIsWeb) {
     logInfo('Firebase Initialize');
     await Firebase.initializeApp();
     await FirebaseMessaging.instance.requestPermission(
@@ -40,8 +42,6 @@ main() async {
     );
     globals.FirebaseToken = await FirebaseMessaging.instance.getToken();
     logInfo('FirebaseToken: ' + globals.FirebaseToken.toString());
-  } else {
-    globals.web = true;
   }
   logInfo('Starting App');
   runApp(const ExpTechHome());
@@ -52,10 +52,10 @@ class ExpTechHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    bool stop = (kIsWeb && (Platform.isAndroid || Platform.isIOS));
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: InitializationPage(),
-      //home: InitializationPage(),
+      home: (!stop) ? const InitializationPage() : const NotSupportPage(),
     );
   }
 }

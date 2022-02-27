@@ -70,6 +70,11 @@ class _OTAPage extends State<OTAPage> {
             _children.add(
               GestureDetector(
                 onTap: () async {
+                  if (data[device][i]["reclaimed"] == true) {
+                    alert = "此版本已回收";
+                    await showAlert(context);
+                    return;
+                  }
                   if (verCode > data[device].length - i) {
                     alert = "不要輕易降低設備版本\n可能會導致設備異常";
                     await showAlert(context);
@@ -98,29 +103,32 @@ class _OTAPage extends State<OTAPage> {
                         ),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              data[device][i]["ver"],
-                              style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.normal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                data[device][i]["ver"],
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
-                            ),
-                            Image.network(
-                              image,
-                              width: 50,
-                              height: 50,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 10),
-                        MarkdownBody(data: note),
-                      ],
+                              Image.network(
+                                image,
+                                width: 80,
+                                height: 80,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 10),
+                          MarkdownBody(data: note),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -3,15 +3,25 @@
 
 ------
 
-- 這是一個 ExpTech Github 模板
+- 這是一個控制 ExpTech IoT 設備的應用程式
 
 ## 索引
+- [資訊](#資訊)
 - [貢獻者](#貢獻者)
 - [發佈規則](#發佈規則)
 - [合作](#合作)
 
+## 資訊
+#### 網站
+- [`http://150.117.110.118/exptech/`](http://150.117.110.118/exptech/)
+#### Firmware
+- [`http://220.134.162.44/firmware/`](http://220.134.162.44/firmware/)
+#### 應用程式
+- [載點](https://github.com/ExpTechTW/ExpTech-Home/releases)
+
 ## 貢獻者
-- whes1015 `文檔`
+- whes1015 `程式開發` `附加資料庫` `文檔`
+- M789 `附加資料庫`
 
 ------
 

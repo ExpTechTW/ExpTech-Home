@@ -31,6 +31,7 @@ class _OTAPage extends State<OTAPage> {
         start = 1;
         int verCode = -1;
         var Data = await Get("http://220.134.162.44/firmware/version.json");
+        print(Data);
         String device = Data[arg["model"]];
         var data = await Get(
             "http://220.134.162.44/firmware/" + device + "/version.json");

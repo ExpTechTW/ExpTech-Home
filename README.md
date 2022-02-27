@@ -1,4 +1,4 @@
-# 模板
+# ExpTech Home
 <img alt="Discord" src="https://img.shields.io/discord/926545182407688273">
 
 ------
@@ -7,6 +7,8 @@
 
 ## 索引
 - [資訊](#資訊)
+- [文檔](#文檔)
+- [注意](#注意)
 - [貢獻者](#貢獻者)
 - [發佈規則](#發佈規則)
 - [合作](#合作)
@@ -18,6 +20,15 @@
 - [`http://220.134.162.44/firmware/`](http://220.134.162.44/firmware/)
 #### 應用程式
 - [載點](https://github.com/ExpTechTW/ExpTech-Home/releases)
+
+## 文檔
+- 
+
+## 注意
+- 採用 `HTTP POST` `WebSocket` 與 [API服務器](https://github.com/ExpTechTW/API) 交互
+- 第一次加載網頁需較長時間 請耐心等待
+- 瀏覽器可能會緩存頁面 必要時清除緩存以套用更新
+- 此服務 依賴 [API服務器](https://github.com/ExpTechTW/API)
 
 ## 貢獻者
 - whes1015 `程式開發` `附加資料庫` `文檔`

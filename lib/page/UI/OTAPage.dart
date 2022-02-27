@@ -70,6 +70,11 @@ class _OTAPage extends State<OTAPage> {
             _children.add(
               GestureDetector(
                 onTap: () async {
+                  if (data[device][i]["reclaimed"] == true) {
+                    alert="此版本已回收";
+                    await showAlert(context);
+                    return;
+                  }
                   if (verCode > data[device].length - i) {
                     alert = "不要輕易降低設備版本\n可能會導致設備異常";
                     await showAlert(context);

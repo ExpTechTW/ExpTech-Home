@@ -25,6 +25,7 @@
 #### 原理
 - [OTA更新 流程圖](https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/image/Device/OTA%E5%8E%9F%E7%90%86%E5%9C%96.png)
 - [Online 原理圖](https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/image/Device/Online%E5%8E%9F%E7%90%86%E5%9C%96.png)
+- [設備控制 原理圖](https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/image/Device/Control%E5%8E%9F%E7%90%86%E5%9C%96.png)
 
 ## 注意
 - 採用 `HTTP POST` `WebSocket` 與 [API服務器](https://github.com/ExpTechTW/API) 交互

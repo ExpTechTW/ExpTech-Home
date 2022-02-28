@@ -72,7 +72,7 @@ class _OTAPage extends State<OTAPage> {
                 onTap: () async {
                   if (data[device][i]["reclaimed"] == true) {
                     alert = "此版本已回收";
-                    await showAlert(context);
+                    print(await showAlert(context));
                     return;
                   } else if (verCode > data[device].length - i) {
                     alert = "不要輕易降低設備版本\n可能會導致設備異常";
@@ -114,11 +114,13 @@ class _OTAPage extends State<OTAPage> {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                data[device][i]["ver"],
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.normal,
+                              Expanded(
+                                child: Text(
+                                  data[device][i]["ver"],
+                                  style: const TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ),
                               Image.network(

@@ -38,6 +38,9 @@ class _OTAUpdatePage extends State<OTAUpdatePage> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
+              const SizedBox(
+                height: 50,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

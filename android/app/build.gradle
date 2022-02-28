@@ -39,7 +39,7 @@ android {
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "22w10-pre1"
     }
 
     buildTypes {

@@ -128,9 +128,10 @@ class _HomePage extends State<HomePage> {
         ),
         onRefresh: () async {
           start = 0;
+          _children = <Widget>[];
+          setState(() {});
+          await Future.delayed(const Duration(milliseconds: 1000));
           while (true) {
-            _children = <Widget>[];
-            setState(() {});
             if (start == 1) {
               break;
             }

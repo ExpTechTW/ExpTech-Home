@@ -1,17 +1,41 @@
-# 模板
+# ExpTech Home
 <img alt="Discord" src="https://img.shields.io/discord/926545182407688273">
 
 ------
 
-- 這是一個 ExpTech Github 模板
+- 這是一個控制 ExpTech IoT 設備的應用程式
 
 ## 索引
+- [資訊](#資訊)
+- [文檔](#文檔)
+- [注意](#注意)
 - [貢獻者](#貢獻者)
 - [發佈規則](#發佈規則)
 - [合作](#合作)
 
+## 資訊
+#### 網站
+- [`http://150.117.110.118/exptech/`](http://150.117.110.118/exptech/)
+#### Firmware
+- [`http://220.134.162.44/firmware/`](http://220.134.162.44/firmware/)
+#### 應用程式
+- [載點](https://github.com/ExpTechTW/ExpTech-Home/releases)
+
+## 文檔
+#### 原理
+- [OTA更新 流程圖](https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/image/Device/OTA%E5%8E%9F%E7%90%86%E5%9C%96.png)
+- [Online 原理圖](https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/image/Device/Online%E5%8E%9F%E7%90%86%E5%9C%96.png)
+- [設備控制 原理圖](https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/image/Device/Control%E5%8E%9F%E7%90%86%E5%9C%96.png)
+
+## 注意
+- 採用 `HTTP POST` `WebSocket` 與 [API服務器](https://github.com/ExpTechTW/API) 交互
+- 第一次加載網頁需較長時間 請耐心等待
+- 瀏覽器可能會緩存頁面 必要時清除緩存以套用更新
+- 此服務 依賴 [API服務器](https://github.com/ExpTechTW/API)
+
 ## 貢獻者
-- whes1015 `文檔`
+- whes1015 `程式開發` `附加資料庫` `文檔`
+- M789 `附加資料庫`
 
 ------
 

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:exptech_home/api/NetWork.dart';
-import 'package:exptech_home/page/UI/HomePage.dart';
 import 'package:exptech_home/page/UI/SettingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -140,7 +139,7 @@ class _ControlPage extends State<ControlPage> {
                         await NetWork(
                             '{"Function":"home","Type":"switch","UID":"${LocalData.get("UID")}","Token":"${globals.Token}","EID":"${arg["EID"]}"}');
                         await Future.delayed(
-                            const Duration(milliseconds: 2000));
+                            const Duration(milliseconds: 3000));
                         if (STATE == time) {
                           alert = "未預期的錯誤";
                           showAlert(context);
@@ -200,16 +199,7 @@ Future<bool?> showAlert(BuildContext context) {
           TextButton(
             child: const Text('知道了'),
             onPressed: () {
-              if (alert == "未預期的錯誤") {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                      maintainState: false,
-                    ));
-              } else {
-                Navigator.of(context).pop();
-              }
+              Navigator.of(context).pop();
             },
           ),
         ],

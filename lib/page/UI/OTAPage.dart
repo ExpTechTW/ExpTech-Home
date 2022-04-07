@@ -60,7 +60,7 @@ class _OTAPage extends State<OTAPage> {
               image =
                   "https://raw.githubusercontent.com/ExpTechTW/API/%E4%B8%BB%E8%A6%81%E7%9A%84-(main)/image/Icon/Release.webp";
             }
-            String note = "# 開發人員未提供相關資訊";
+            String note = "# 開發人員未提供資訊";
             for (var I = 0; I < DATA.length; I++) {
               if (DATA[I]["tag_name"] == data[device][i]["ver"]) {
                 note = DATA[I]["body"];

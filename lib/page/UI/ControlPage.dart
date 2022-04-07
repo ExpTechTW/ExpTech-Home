@@ -63,9 +63,10 @@ class _ControlPage extends State<ControlPage> {
         channel.sink.add('{"EID":"${LocalData.get("token")}"}');
         channel.stream.listen((message) {
           var Data = jsonDecode(message);
-          if (Data["EID"].toString() == arg["EID"].toString()) {
-            if (data["response"]["state"] != Data["state"]) {
-              data["response"] = Data;
+          if (Data["device"] != null &&
+              Data["device"]["EID"].toString() == arg["EID"].toString()) {
+            if (data["response"]["state"] != Data["device"]["state"]) {
+              data["response"] = Data["device"];
               if (State[data["response"]["model"]] == null) {
                 if (data["response"]["state"] == 1) {
                   state = "🟢 開啟";

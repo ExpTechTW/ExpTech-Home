@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:exptech_home/api/Data.dart' as globals;
 import 'package:exptech_home/api/NetWork.dart';
 import 'package:exptech_home/page/UI/SettingPage.dart';
+import 'package:exptech_home/page/system/Initialization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -131,6 +132,8 @@ class _ControlPage extends State<ControlPage> {
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () async {
+                      channel = WebSocketChannel.connect(
+                          Uri.parse('ws://150.117.110.118:910'));
                       if (check) {
                         int STATE = time;
                         state = "執行中...";
@@ -199,7 +202,16 @@ Future<bool?> showAlert(BuildContext context) {
           TextButton(
             child: const Text('知道了'),
             onPressed: () {
-              Navigator.of(context).pop();
+              if (alert == "未預期的錯誤") {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InitializationPage(),
+                      maintainState: false,
+                    ));
+              } else {
+                Navigator.of(context).pop();
+              }
             },
           ),
         ],
